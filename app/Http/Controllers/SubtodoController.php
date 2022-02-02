@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subtodo;
+use App\Http\Requests\StoreSubtodoRequest;
+use App\Http\Requests\UpdateSubtodoRequest;
 use App\Models\Todo;
-use App\Http\Requests\StoreTodoRequest;
-use App\Http\Requests\UpdateTodoRequest;
+use GuzzleHttp\Psr7\Request;
 
-class TodoController extends Controller
+class SubtodoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,65 +18,64 @@ class TodoController extends Controller
     public function index()
     {
         return response()->json(
-            Todo::all()
+            Subtodo::all()
         );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTodoRequest  $request
+     * @param  \App\Http\Requests\StoreSubtodoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTodoRequest $request)
+    public function store(StoreSubtodoRequest $request)
     {
         return response()->json(
-            Todo::create($request->validated()),
-            201
+            Subtodo::create($request->validated())
         );
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Todo  $todo
+     * @param  \App\Models\Subtodo  $subtodo
      * @return \Illuminate\Http\Response
      */
-    public function show(Todo $todo)
+    public function show(Subtodo $subtodo)
     {
         return response()->json(
-            $todo->load('subtodos')
+            $subtodo
         );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTodoRequest  $request
-     * @param  \App\Models\Todo  $todo
+     * @param  \App\Http\Requests\UpdateSubtodoRequest  $request
+     * @param  \App\Models\Subtodo  $subtodo
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTodoRequest $request, Todo $todo)
+    public function update(UpdateSubtodoRequest $request, Subtodo $subtodo)
     {
-        $todo->update($request->validated());
+        $subtodo->update($request->validated());
 
         return response()->json(
-            Todo::find($todo->id)
+            Subtodo::find($subtodo->id)
         );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Todo  $todo
+     * @param  \App\Models\Subtodo  $subtodo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Todo $todo)
+    public function destroy(Subtodo $subtodo)
     {
-        $todo->delete();
+        $subtodo->delete();
 
         return response()->json(
-            $todo
+            $subtodo
         );
     }
 }
